@@ -1,0 +1,11 @@
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.env
+venv/
+.DS_Store
+Thumbs.db
+ml/models/*.pkl
+ml/data/raw/
+ml/data/processed/
