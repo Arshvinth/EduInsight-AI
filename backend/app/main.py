@@ -8,7 +8,8 @@
 
 from fastapi import FastAPI
 from sqlalchemy import text
-from app.core.database import engine
+from app.core.database import engine, Base
+from app.models import User, Student, Module
 
 app = FastAPI(title="EduInsight AI API")
 
@@ -18,6 +19,8 @@ def startup_db_check():
         with engine.connect() as connection:
             connection.execute(text("SELECT 1"))
         print("Database connected successfully")
+        Base.metadata.create_all(bind=engine)
+        print("Tables created successfully")
     except Exception as e:
         print("Database connection failed:", e)
 
