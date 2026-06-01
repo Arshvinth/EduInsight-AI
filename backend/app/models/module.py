@@ -1,7 +1,9 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime
+from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime
 from app.core.database import Base
 
+
+# SQLAlchemy model for the modules table
 class Module(Base):
     __tablename__ = "modules"
 
