@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, DateTim
 from datetime import datetime
 from app.core.database import Base
 
+
+# SQLAlchemy model for the students table
 class Student(Base):
     __tablename__ = "students"
 
