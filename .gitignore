@@ -1,0 +1,87 @@
+# Environment files
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+pip-log.txt
+venv/
+ENV/
+env/
+.venv/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints
+
+# IDEs
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node
+node_modules/
+frontend/node_modules/
+dist/
+build/
+frontend/build/
+frontend/dist/
+
+# Uploads / user data
+uploads/
+backend/uploads/
+ml/data/
+ml/data/processed/
+ml/data/raw/
+
+# Models and large artifacts
+ml/models/
+models/
+*.pt
+*.pth
+*.h5
+*.ckpt
+*.onnx
+*.bin
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Databases
+*.sqlite3
+*.db
+database/*.db
+database/*.sqlite3
+
+# Packaging
+*.egg-info/
+*.whl
+
