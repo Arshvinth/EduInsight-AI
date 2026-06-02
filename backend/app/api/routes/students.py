@@ -3,9 +3,16 @@ from sqlalchemy.orm import Session
 
 from app.dependencies.database import get_db
 from app.dependencies.auth import get_current_user
+from app.dependencies.roles import require_admin_or_faculty
 from app.models.user import User
-from app.schemas.student import StudentCreate, StudentRead
-from app.crud.student import create_student, get_student_by_user_id, get_student_by_code
+from app.schemas.student import StudentCreate, StudentRead, StudentUpdate
+from app.crud.student import (
+    create_student,
+    get_student_by_user_id,
+    get_student_by_code,
+    get_student_by_id,
+    update_student
+)
 
 
 # Router for student endpoints
@@ -19,7 +26,6 @@ def create_student_profile(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    # Only the user themselves or admin can create student profile later if needed
     existing_student = get_student_by_user_id(db, student.user_id)
     if existing_student:
         raise HTTPException(
@@ -51,3 +57,22 @@ def read_my_student_profile(
             detail="Student profile not found"
         )
     return student
+
+
+# Faculty/admin can update any student field except id/user_id
+@router.put("/{student_id}", response_model=StudentRead)
+def update_student_profile(
+    student_id: int,
+    update_data: StudentUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin_or_faculty)
+):
+    student = get_student_by_id(db, student_id)
+    if not student:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Student not found"
+        )
+
+    updated_student = update_student(db, student, update_data)
+    return updated_student

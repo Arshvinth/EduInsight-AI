@@ -12,5 +12,10 @@ class TokenData(BaseModel):
     username: str | None = None
 
 
+# Schema for user login payload
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
 
 # defines what the login response looks like

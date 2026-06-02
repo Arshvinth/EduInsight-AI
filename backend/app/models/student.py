@@ -12,7 +12,10 @@ class Student(Base):
     student_code = Column(String(50), unique=True, nullable=False, index=True)
     full_name = Column(String(150), nullable=False)
     department = Column(String(100), nullable=False)
+    registered_degree = Column(String(150), nullable=True)
+    specialization = Column(String(150), nullable=True)
     semester = Column(Integer, nullable=False)
+    year = Column(Integer, nullable=True)   # Updated by faculty/admin
     dob = Column(Date, nullable=True)
     gender = Column(String(20), nullable=True)
     cgpa = Column(Float, default=0.0)

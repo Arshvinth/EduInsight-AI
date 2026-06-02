@@ -5,10 +5,13 @@ from app.core.database import engine, Base
 from app.models.user import User
 from app.models.student import Student
 from app.models.module import Module
+from app.models.enrollment import Enrollment
+
 from app.api.routes.auth import router as auth_router
 from app.api.routes.users import router as users_router
 from app.api.routes.students import router as students_router
 from app.api.routes.modules import router as modules_router
+from app.api.routes.enrollments import router as enrollments_router
 
 
 app = FastAPI(title="EduInsight AI API")
@@ -38,3 +41,4 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(students_router)
 app.include_router(modules_router)
+app.include_router(enrollments_router)

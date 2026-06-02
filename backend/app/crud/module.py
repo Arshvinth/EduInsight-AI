@@ -8,6 +8,11 @@ def get_module_by_code(db: Session, module_code: str):
     return db.query(Module).filter(Module.module_code == module_code).first()
 
 
+# Get a module by ID
+def get_module_by_id(db: Session, module_id: int):
+    return db.query(Module).filter(Module.id == module_id).first()
+
+
 # Create a new module
 def create_module(db: Session, module_data: ModuleCreate):
     db_module = Module(
