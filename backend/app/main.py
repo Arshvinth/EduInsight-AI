@@ -6,12 +6,14 @@ from app.models.user import User
 from app.models.student import Student
 from app.models.module import Module
 from app.models.enrollment import Enrollment
+from app.models.attendance import Attendance
 
 from app.api.routes.auth import router as auth_router
 from app.api.routes.users import router as users_router
 from app.api.routes.students import router as students_router
 from app.api.routes.modules import router as modules_router
 from app.api.routes.enrollments import router as enrollments_router
+from app.api.routes.attendance import router as attendance_router
 
 
 app = FastAPI(title="EduInsight AI API")
@@ -24,7 +26,7 @@ def startup_db_check():
             connection.execute(text("SELECT 1"))
         print("Database connected successfully")
 
-        # Create tables if they do not exist
+        # Create any missing tables
         Base.metadata.create_all(bind=engine)
         print("Tables created successfully")
     except Exception as e:
@@ -36,9 +38,10 @@ def root():
     return {"message": "EduInsight AI Backend is running"}
 
 
-# Register routes
+# Register API routers
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(students_router)
 app.include_router(modules_router)
 app.include_router(enrollments_router)
+app.include_router(attendance_router)
