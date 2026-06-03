@@ -18,39 +18,24 @@ from app.api.routes.enrollments import router as enrollments_router
 from app.api.routes.attendance import router as attendance_router
 from app.api.routes.results import router as results_router
 from app.api.routes.ai import router as ai_router
+from app.api.routes.ml import router as ml_router
 
 
 app = FastAPI(title="EduInsight AI API")
 
 
-# @app.on_event("startup")
-# def startup_db_check():
-#     try:
-#         with engine.connect() as connection:
-#             connection.execute(text("SELECT 1"))
-#         print("Database connected successfully")
-
-#         # Create all missing tables
-#         Base.metadata.create_all(bind=engine)
-#         print("Tables created successfully")
-#     except Exception as e:
-#         print("Database connection failed:", e)
-
 @app.on_event("startup")
 def startup_db_check():
     try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+        print("Database connected successfully")
 
-        with engine.begin() as conn:
-            conn.execute(
-                text("CREATE EXTENSION IF NOT EXISTS vector")
-            )
-
+        # Create all missing tables
         Base.metadata.create_all(bind=engine)
-
-        print("Database Ready")
-
+        print("Tables created successfully")
     except Exception as e:
-        print(e)
+        print("Database connection failed:", e)
 
 
 @app.get("/")
@@ -67,3 +52,4 @@ app.include_router(enrollments_router)
 app.include_router(attendance_router)
 app.include_router(results_router)
 app.include_router(ai_router)
+app.include_router(ml_router)
