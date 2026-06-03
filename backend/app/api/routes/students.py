@@ -13,6 +13,7 @@ from app.crud.student import (
     get_student_by_id,
     update_student
 )
+from app.models.student import Student
 
 
 # Router for student endpoints
@@ -76,3 +77,38 @@ def update_student_profile(
 
     updated_student = update_student(db, student, update_data)
     return updated_student
+
+
+# List all students (admin/faculty only)
+@router.get("/", response_model=list[StudentRead])
+def list_students(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin_or_faculty)
+):
+    return db.query(Student).all()
+
+
+# Get a single student by id (admin/faculty only)
+@router.get("/{student_id}", response_model=StudentRead)
+def get_student_detail(
+    student_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin_or_faculty)
+):
+    student = get_student_by_id(db, student_id)
+    if not student:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Student not found"
+        )
+    return student
+
+
+# Return a simple student count for dashboards
+@router.get("/count", response_model=dict)
+def students_count(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    count = db.query(Student).count()
+    return {"count": count}

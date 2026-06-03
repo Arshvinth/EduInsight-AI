@@ -13,6 +13,7 @@ from app.crud.module import (
     create_module,
     update_module
 )
+from app.models.module import Module
 
 
 # Router for module endpoints
@@ -77,3 +78,13 @@ def edit_module(
         )
 
     return update_module(db, module, module_data)
+
+
+# Simple modules count endpoint for dashboard
+@router.get("/count", response_model=dict)
+def modules_count(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    count = db.query(Module).count()
+    return {"count": count}
